@@ -1,1 +1,535 @@
-﻿
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>�����֮ս S17 �������� - Ӣ��ͼ��</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 5px rgba(255,215,0,.3)}50%{box-shadow:0 0 20px rgba(255,215,0,.6)}}
+@keyframes starPulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+@keyframes borderRotate{0%{--angle:0deg}100%{--angle:360deg}}
+body{
+  font-family:'Microsoft YaHei','PingFang SC',sans-serif;
+  background:#f4f6f9;
+  color:#333;min-height:100vh;
+}
+
+.container{max-width:1400px;margin:0 auto;padding:20px;position:relative;z-index:1}
+header{text-align:center;padding:40px 20px 30px;position:relative}
+header h1{
+  font-size:2em;font-weight:900;color:#1a1a2e;letter-spacing:3px;
+}
+header .subtitle{font-size:.95em;color:#666;margin-top:4px;letter-spacing:2px;}
+header .season-badge{display:none}
+.stats-bar{display:none}
+.stats-bar{display:none}
+.stats-bar{display:none}
+.search-container{
+  display:flex;justify-content:center;gap:12px;margin:25px auto;
+  max-width:700px;flex-wrap:wrap;padding:0 20px;
+}
+.search-box{
+  flex:1;min-width:250px;padding:10px 18px;
+  border-radius:20px;border:1px solid #d0d5dd;
+  background:#fff;color:#333;font-size:.95em;
+  outline:none;transition:all .2s;
+  box-shadow:0 1px 4px rgba(0,0,0,.06);
+}
+.search-box:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12)}
+.search-box::placeholder{color:#aaa}
+.filter-buttons{
+  display:flex;justify-content:center;gap:8px;margin:15px auto;
+  max-width:900px;flex-wrap:wrap;padding:0 20px;
+}
+.filter-btn{
+  padding:5px 14px;border-radius:14px;border:1px solid #d0d5dd;
+  background:#fff;color:#555;font-size:.82em;
+  cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.filter-btn:hover{background:#eef2ff;border-color:#6366f1;color:#6366f1}
+.filter-btn.active{background:#6366f1;border-color:#6366f1;color:#fff;box-shadow:0 2px 8px rgba(99,102,241,.25)}
+.cost-section{margin:35px 0;animation:fadeIn .6s ease-out}
+.cost-header{
+  display:flex;align-items:center;gap:10px;margin-bottom:10px;
+  padding:8px 14px;border-radius:10px;background:#fff;
+  border-left:4px solid #aaa;box-shadow:0 1px 4px rgba(0,0,0,.06);
+}
+.cost-header::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;opacity:.15;
+}
+.cost-1 .cost-header{background:linear-gradient(135deg,rgba(128,128,128,.2),rgba(80,80,80,.1));border-left:4px solid #aaa}
+.cost-2 .cost-header{background:linear-gradient(135deg,rgba(50,180,50,.2),rgba(30,120,30,.1));border-left:4px solid #4CAF50}
+.cost-3 .cost-header{background:linear-gradient(135deg,rgba(50,100,220,.2),rgba(30,60,150,.1));border-left:4px solid #42A5F5}
+.cost-4 .cost-header{background:linear-gradient(135deg,rgba(180,50,220,.2),rgba(120,30,150,.1));border-left:4px solid #AB47BC}
+.cost-5 .cost-header{background:linear-gradient(135deg,rgba(255,180,0,.2),rgba(180,120,0,.1));border-left:4px solid #FFC107}
+.cost-header .cost-icon{
+  font-size:1.8em;width:50px;height:50px;display:flex;align-items:center;justify-content:center;
+  border-radius:12px;font-weight:900;
+}
+.cost-1 .cost-icon{background:linear-gradient(135deg,#888,#666);color:#fff}
+.cost-2 .cost-icon{background:linear-gradient(135deg,#4CAF50,#2E7D32);color:#fff}
+.cost-3 .cost-icon{background:linear-gradient(135deg,#42A5F5,#1565C0);color:#fff}
+.cost-4 .cost-icon{background:linear-gradient(135deg,#AB47BC,#6A1B9A);color:#fff}
+.cost-5 .cost-icon{background:linear-gradient(135deg,#FFD700,#FF8C00);color:#fff}
+.cost-header .cost-title{font-size:1.3em;font-weight:700}
+.cost-header .cost-count{font-size:.85em;color:#888;margin-left:auto}
+.cost-stars{color:#ffd700;letter-spacing:2px;font-size:.9em}
+.hero-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:16px;
+}
+.hero-card{
+  background:#fff;border-radius:10px;padding:10px;
+  border:1px solid #e8ecf0;
+  transition:box-shadow .2s,border-color .2s;
+  animation:fadeIn .4s ease-out both;
+  position:relative;overflow:hidden;
+  cursor:default;
+}
+.hero-card::before{display:none}
+.cost-1 .hero-card::before{display:none}
+.cost-2 .hero-card::before{display:none}
+.cost-3 .hero-card::before{display:none}
+.cost-4 .hero-card::before{display:none}
+.cost-5 .hero-card::before{display:none}
+.hero-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);border-color:#6366f1;}
+.hero-card:hover::before{opacity:1}
+.hero-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.hero-avatar{
+  width:48px;height:48px;border-radius:8px;flex-shrink:0;
+  overflow:hidden;display:flex;align-items:center;justify-content:center;
+  font-size:1.3em;font-weight:900;color:#fff;
+  border:2px solid #e8ecf0;
+}
+.hero-avatar img{width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:50%;}
+.hero-avatar::after{
+  content:'';position:absolute;inset:-3px;border-radius:50%;
+  border:2px solid transparent;
+}
+.cost-1 .hero-avatar{background:linear-gradient(135deg,#6b6b6b,#444)}
+.cost-1 .hero-avatar::after{border-color:rgba(170,170,170,.4)}
+.cost-2 .hero-avatar{background:linear-gradient(135deg,#388E3C,#1B5E20)}
+.cost-2 .hero-avatar::after{border-color:rgba(76,175,80,.4)}
+.cost-3 .hero-avatar{background:linear-gradient(135deg,#1976D2,#0D47A1)}
+.cost-3 .hero-avatar::after{border-color:rgba(66,165,245,.4)}
+.cost-4 .hero-avatar{background:linear-gradient(135deg,#8E24AA,#4A148C)}
+.cost-4 .hero-avatar::after{border-color:rgba(171,71,188,.4)}
+.cost-5 .hero-avatar{background:linear-gradient(135deg,#F9A825,#E65100)}
+.cost-5 .hero-avatar::after{border-color:rgba(255,215,0,.5)}
+.cost-5 .hero-card{border-color:rgba(255,180,0,.2)}
+.cost-5 .hero-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);border-color:#6366f1;}
+.hero-info{flex:1;min-width:0}
+.hero-name{font-size:1.1em;font-weight:700;color:#fff;line-height:1.3}
+.hero-name-en{font-size:.75em;color:#777;font-weight:400}
+.hero-stars{margin-top:2px}
+.hero-stars span{font-size:.7em}
+.role-badge{
+  display:inline-block;padding:2px 10px;border-radius:10px;
+  font-size:.7em;margin-top:4px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  color:#aaa;
+}
+.synergies{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.synergy-tag{font-size:.7em;padding:1px 6px;border-radius:8px;background:#f0f4f8;color:#555;border:1px solid #e0e7ef;}
+.synergy-tag:hover{
+  background:rgba(100,60,200,.3);border-color:rgba(150,100,255,.5);
+}
+.items-section{
+  background:rgba(0,0,0,.2);border-radius:10px;padding:10px 12px;
+}
+.items-label{font-size:.7em;color:#666;margin-bottom:7px;letter-spacing:1px}
+.items-list{display:flex;gap:8px;flex-wrap:wrap}
+.item-badge{
+  display:flex;align-items:center;gap:5px;
+  padding:4px 10px;border-radius:8px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+  font-size:.72em;color:#ccc;transition:all .3s;white-space:nowrap;
+}
+.item-badge:hover{
+  background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);
+  transform:translateY(-1px);
+}
+.item-icon{
+  width:26px;height:26px;border-radius:5px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65em;color:#fff;font-weight:700;overflow:hidden;
+}
+.item-icon img{width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;}
+.item-ad{background:linear-gradient(135deg,#e53935,#b71c1c)}
+.item-ap{background:linear-gradient(135deg,#7B1FA2,#4A148C)}
+.item-tank{background:linear-gradient(135deg,#37474F,#263238)}
+.item-as{background:linear-gradient(135deg,#F57F17,#E65100)}
+.item-util{background:linear-gradient(135deg,#00897B,#004D40)}
+.item-crit{background:linear-gradient(135deg,#FF6F00,#E65100)}
+.no-results{
+  text-align:center;padding:60px 20px;color:#666;font-size:1.1em;
+  display:none;
+}
+.no-results.show{display:block}
+footer{
+  text-align:center;padding:40px 20px;color:#444;font-size:.8em;
+  border-top:1px solid rgba(255,255,255,.05);margin-top:40px;
+}
+.back-top{
+  position:fixed;bottom:30px;right:30px;width:45px;height:45px;
+  border-radius:50%;background:linear-gradient(135deg,rgba(100,50,200,.8),rgba(50,100,255,.8));
+  border:none;color:#fff;font-size:1.2em;cursor:pointer;
+  opacity:0;transition:all .3s;z-index:100;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(100,50,200,.4);
+}
+.back-top.show{opacity:1}
+.back-top:hover{transform:scale(1.1)}
+@media(max-width:768px){
+  header h1{font-size:1.8em;letter-spacing:2px}
+  .hero-grid{grid-template-columns:1fr}
+  .stats-bar{display:none}
+  .stats-bar{display:none}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <h1>�����֮ս</h1>
+  <div class="subtitle">S17 �������� �� Ӣ��ͼ��</div>
+  
+</header>
+
+  <div class="stat"><span>5</span>�����õȼ�</div>
+  <div class="stat"><span>20+</span>���</div>
+  <div class="stat"><span>3</span>���Ƽ�װ��</div>
+</div>
+
+<div class="search-container">
+  <input type="text" class="search-box" id="searchInput" placeholder="?? ����Ӣ�����ơ�����λ...">
+</div>
+
+<div class="filter-buttons" id="filterButtons">
+  <button class="filter-btn active" data-filter="all">ȫ��</button>
+  <button class="filter-btn" data-filter="1">1��</button>
+  <button class="filter-btn" data-filter="2">2��</button>
+  <button class="filter-btn" data-filter="3">3��</button>
+  <button class="filter-btn" data-filter="4">4��</button>
+  <button class="filter-btn" data-filter="5">5��</button>
+  <button class="filter-btn" data-filter="����Cλ">����Cλ</button>
+  <button class="filter-btn" data-filter="ħ��Cλ">ħ��Cλ</button>
+  <button class="filter-btn" data-filter="̹��">̹��</button>
+  <button class="filter-btn" data-filter="սʿ">սʿ</button>
+  <button class="filter-btn" data-filter="ʩ����">ʩ����</button>
+  <button class="filter-btn" data-filter="�ո���">�ո���</button>
+</div>
+
+<div id="heroContent"></div>
+
+<div class="no-results" id="noResults">
+  <p>?? û���ҵ�ƥ���Ӣ��</p>
+  <p style="font-size:.85em;margin-top:8px">���������ؼ��ʰ�</p>
+</div>
+
+<footer>
+  <p>�����֮ս S17 �������� Ӣ��ͼ�� �� ���ݽ����ο�</p>
+  <p style="margin-top:5px">װ���Ƽ����ڵ�ǰ�汾ǿ�ȣ�ʵ�ʶԾ���������</p>
+</footer>
+</div>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">��</button>
+
+<script>
+const PINYIN_MAP = {
+  '璐濊暰浜?:'bei lei ya','娉㈡瘮':'bo bi','缁磋喀':'wei jia','鍑壒鐞?:'kai te lin',
+  '鎻愯帿':'ti mo','鍐呯憻鏂?:'nei se si','宕旀柉鐗?:'cui si te','娉伴殕':'tai long',
+  '浼婃辰鐟炲皵':'yi ze rui er','钑炬濞?:'lei ou na','涓芥鍗?:'li sang zhuo',
+  '闆峰厠濉?:'lei ke sai','鍗戝皵缁存柉':'bei er wei si','闃垮崱涓?:'a ka li',
+  '閲戝厠涓?:'jin ke si','绾冲皵':'na er','娲惧厠':'pai ke','鍙ゆ媺鍔犳柉':'gu la jia si',
+  '鏍兼俯':'ge wen','璐惧厠鏂?:'jia ke si','绫冲埄娆?:'mi li ou','浣愪紛':'zuo yi',
+  '灏忔湪鐏?:'xiao mu ling','鑾痉鍑拻':'mo de kai sa','娼樻．':'pan sen',
+  '鍘勮繍灏忓':'e yun xiao jie','淇勬礇浼?:'e luo yi','闃胯悵鎷?:'a luo la',
+  '鑿插吂':'fei zi','鑼傚嚡':'mao kai','鍗¤帋':'ka sha','鍘勫姞鐗?:'e jia te',
+  '缁村厠鎵?:'wei ke tuo','鑾庡讥鎷?:'sha mi la','濂ユ仼':'ao en','鐠愮拹':'lu lu',
+  '榛涘畨濞?:'dai an na','鎷変簹鏂壒':'la ya si te','鎷夎帿鏂?:'la mo si',
+  '搴撳':'ku qi','鍗冪弿':'qian jue','鍗″皵鐜?:'ka er ma',
+  '濂ョ憺鍒╁畨路绱㈠皵':'ao rui li an suo er','瓒呯骇鏈虹敳':'chao ji ji jia',
+  '鏄?:'yi','濞滅編':'na mei','鍔姫鍜屽▉鏈楁櫘':'nu nu he wei lang pu',
+  '閿愰洴':'rui wen','涔愯姍鍏?:'le fu lan','闇?:'xia','濉斿':'ta mu',
+  '宸村痉':'ba de','鑿插ゥ濞?:'fei ao na','鐑?:'jin','甯冮噷鑼?:'bu li ci',
+  '濞戝':'suo na','钖囧彜涓?:'wei gu si','鎱?:'shen','鍔?:'jie',
+  '鏍奸浄绂忔柉':'ge lei fu si','鑾敇濞?:'mo gan na'
+};
+function getPinyin(name){return PINYIN_MAP[name]||'';}
+function getInitials(name){const py=getPinyin(name);if(!py)return '';return py.split(' ').map(s=>s[0]).join('');}
+function matchHero(h,q){
+  if(!q)return true;
+  const name=h.name;
+  if(name.includes(q))return true;
+  const py=getPinyin(name);
+  if(py&&py.replace(/ /g,'').includes(q.replace(/ /g,'')))return true;
+  if(py&&py.includes(q))return true;
+  const initials=getInitials(name).toLowerCase();
+  if(initials&&(initials===q.toLowerCase()||initials.startsWith(q.toLowerCase())))return true;
+  const extra=(h.synergies.join(' ')+' '+h.role+' '+h.items.join(' ')).toLowerCase();
+  if(extra.includes(q))return true;
+  return false;
+}
+const ITEM_STYLES = {
+  '�޾�֮��':'ad','���˲���':'ad','��������':'ad','˷��֮ì':'ad','ҹ֮����':'ad',
+  '��⻤��':'crit','��Ѫ��':'ad','�����Ŀ�֮��':'as','˹����˵���':'as',
+  '����ʹ֮��':'ap','���Է�':'ap','��⻤��':'ap','¬���ȵ�쫷�':'as',
+  '̩̹�ļ��':'tank','����֮צ':'tank','����':'util','����֮��':'util',
+  '��ͽ����':'tank','���׶���':'tank','ʯ���ʯ���':'tank','���̱���':'tank',
+  '���ӻ�':'ap'
+};
+const ITEM_ABBR = {
+  '�޾�֮��':'?','���˲���':'??','��������':'??','˷��֮ì':'??','ҹ֮����':'??',
+  '��⻤��':'??','��Ѫ��':'??','�����Ŀ�֮��':'?','˹����˵���':'?',
+  '����ʹ֮��':'?','���Է�':'??','��⻤��':'??','¬���ȵ�쫷�':'??',
+  '̩̹�ļ��':'??','����֮צ':'??','����':'??','����֮��':'?',
+  '��ͽ����':'?','���׶���':'??','ʯ���ʯ���':'??','���̱���':'??',
+  '���ӻ�':'??'
+};
+const ITEM_IMAGES = {
+  '�޾�֮��':'https://mumu-apk.fp.ps.netease.com/file/65bb5e213dfac400fc846c6buVEIXFbw05',
+  '���˲���':'https://mumu-apk.fp.ps.netease.com/file/65bb639ce0559a3acee6d482t0aDBil105',
+  '��������':'https://mumu-apk.fp.ps.netease.com/file/65bb63a553d07c8a127bdb25j4vd8NYk05',
+  '˷��֮ì':'https://mumu-apk.fp.ps.netease.com/file/65bb5e2838579e891246dc290KwLRXVx05',
+  '��⻤��':'https://mumu-apk.fp.ps.netease.com/file/65bb63422ed7957a6d15e827QSmyeJmE05',
+  '�����Ŀ�֮��':'https://mumu-apk.fp.ps.netease.com/file/65bb5e452efe32e925e58722y39oiEXM05',
+  '����ʹ֮��':'https://mumu-apk.fp.ps.netease.com/file/65bb5e532b4bc4105141a89afJ1oZTZD05',
+  '���Է�':'https://mumu-apk.fp.ps.netease.com/file/65bb63acce977305cf74308fsuf2bk3U05',
+  '̩̹�ļ��':'https://mumu-apk.fp.ps.netease.com/file/65bb63a11aa419a4b8df5608OvBIiwX605',
+  '����֮צ':'https://mumu-apk.fp.ps.netease.com/file/65bb6335872e45254347e367Tp8JFWPd05',
+  '����֮��':'https://mumu-apk.fp.ps.netease.com/file/65bb6345ecdeb81033d580bcF2GhCClj05',
+  '��ͽ����':'https://mumu-apk.fp.ps.netease.com/file/65bb633cce977305cf742bfdUe9cjVqx05',
+  'ʯ���ʯ���':'https://mumu-apk.fp.ps.netease.com/file/65bb63af9f8a48a4d6a9475bd8PxN5t405',
+  '���ӻ�':'https://mumu-apk.fp.ps.netease.com/file/65bb6352bfc163b009f94c59QUyjoYVV05',
+  '��ȡ��':'https://mumu-apk.fp.ps.netease.com/file/65bb5e369ad6272116073dbfxI22KOxK05',
+  '����':'http://mumu-apk.fp.ps.netease.com/file/692d024987e79d8c72c94257Uxrcxg1N07',
+  'ҹ֮����':'https://mumu-apk.fp.ps.netease.com/file/65bb5e2b8bb0622fd7cc3b1bRUYI51sb05',
+  '���׶���':'https://mumu-apk.fp.ps.netease.com/file/65bb63b2b08735b7594e1c5fryuETVlK05',
+  '���̱���':'https://mumu-apk.fp.ps.netease.com/file/65bb63a84fc586a2cafe925eB3Nd2xjN05'
+};
+
+const HEROES = [
+  // 1��
+  {name:'������',avatar:'images/������.png',en:"Bel'Veth",cost:1,synergies:['����ս��','��ħ��','����'],role:'����սʿ',items:['��Ѫ��','�޾�֮��','̩̹�ļ��']},
+  {name:'����',avatar:'images/����.png',en:'Poppy',cost:1,synergies:['ľ����','������ʿ'],role:'ħ��̹��',items:['����','��ͽ����','����֮צ']},
+  {name:'ά��',avatar:'images/ά��.png',en:'Veigar',cost:1,synergies:['ľ����','ħ��ʦ'],role:'ħ��ʩ����',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'���п�˹',en:'Aatrox',cost:1,synergies:['�����ع���','������ʿ'],role:'����̹��',items:['����','��ͽ����','���׶���']},
+  {name:'������',avatar:'images/������.png',en:'Caitlyn',cost:1,synergies:['�����ع���','֯����'],role:'����սʿ',items:['��Ѫ��','�޾�֮��','̩̹�ļ��']},
+  {name:'��Ī',avatar:'images/��Ī.png',en:'Teemo',cost:1,synergies:['̫���ɶ�','������'],role:'ħ��Cλ',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'��ɪ˹',avatar:'images/��ɪ˹.png',en:'Nasus',cost:1,synergies:['̫���ɶ�','��װսʿ'],role:'ħ��̹��',items:['����','��ͽ����','����֮צ']},
+  {name:'��˹��',avatar:'images/��˹��.png',en:'Twisted Fate',cost:1,synergies:['������','֯����'],role:'ħ��ʩ����',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'̩¡',avatar:'images/̩¡.png',en:'Talon',cost:1,synergies:['������','����'],role:'�����ո���',items:['�޾�֮��','ҹ֮����','��⻤��']},
+  {name:'�������',avatar:'images/�������.png',en:'Ezreal',cost:1,synergies:['δ��սʿ','����'],role:'����ʩ����',items:['˷��֮ì','���Է�','���˲���']},
+  {name:'��ŷ��',avatar:'images/��ŷ��.png',en:'Leona',cost:1,synergies:['����','��װսʿ'],role:'ħ��̹��',items:['����','��ͽ����','����֮צ']},
+  {name:'�Ƽ�˹',en:"Cho'Gath",cost:1,synergies:['����','��ʿ'],role:'ħ��̹��',items:['����','��ͽ����','���׶���']},
+  {name:'��ɣ׿',avatar:'images/��ɣ׿.png',en:'Lissandra',cost:1,synergies:['����','������','ħ��ʦ'],role:'ħ��ʩ����',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'�׿���',avatar:'images/�׿���.png',en:"Rek'Sai",cost:1,synergies:['��ħ��','��ʿ'],role:'ħ��̹��',items:['����','��ͽ����','���׶���']},
+  // 2��
+  {name:'����ά˹',avatar:'images/����ά˹.png',en:"Bel'Veth II",cost:2,synergies:['��ħ��','��ս��','��սʿ'],role:'����սʿ',items:['�����Ŀ�֮��','��Ѫ��','̩̹�ļ��']},
+  {name:'������',avatar:'images/������.png',en:'Akali',cost:2,synergies:['�����ع���','��սʿ'],role:'����սʿ',items:['��Ѫ��','�޾�֮��','̩̹�ļ��']},
+  {name:'���˿',avatar:'images/���˿.png',en:'Jinx',cost:2,synergies:['����ս��','��ս��'],role:'����Cλ',items:['�����Ŀ�֮��','���˲���','��⻤��']},
+  {name:'�ɶ�',avatar:'images/�ɶ�.png',en:'Gnar',cost:2,synergies:['ľ����','����'],role:'����սʿ',items:['��Ѫ��','�޾�֮��','̩̹�ļ��']},
+  {name:'�ɿ�',avatar:'images/�ɿ�.png',en:'Pyke',cost:2,synergies:['�����ع�','����'],role:'�����ո���',items:['�޾�֮��','ҹ֮����','��⻤��']},
+  {name:'������˹',avatar:'images/������˹.png',en:'Gragas',cost:2,synergies:['�����ع�','��ʿ'],role:'ħ��̹��',items:['����','��ͽ����','����֮צ']},
+  {name:'����',avatar:'images/����.png',en:'Gwen',cost:2,synergies:['̫���ɶ�','����'],role:'ħ���ո���',items:['����ʹ֮��','���Է�','�����Ŀ�֮��']},
+  {name:'�ֿ�˹',avatar:'images/�ֿ�˹.png',en:'Jax',cost:2,synergies:['������','������ʿ'],role:'ħ��̹��',items:['����','��ͽ����','����֮צ']},
+  {name:'����ŷ',avatar:'images/����ŷ.png',en:'Milio',cost:2,synergies:['δ��սʿ','֯����'],role:'ħ��ʩ����',items:['����ʹ֮��','���Է�','¬���ȵ�쫷�']},
+  {name:'����',avatar:'images/����.png',en:'Zoe',cost:2,synergies:['����','����'],role:'ħ��ʩ����',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'Сľ��',avatar:'images/Сľ��.png',en:'Lillia',cost:2,synergies:['ľ����','������','����'],role:'ħ��̹��',items:['����','��ͽ����','����֮צ']},
+  {name:'Ī�¿���',avatar:'images/Ī�¿���.png',en:'Mordekaiser',cost:2,synergies:['����','����','��װսʿ'],role:'ħ��̹��',items:['����','��ͽ����','���׶���']},
+  {name:'��ɭ',avatar:'images/��ɭ.png',en:'Pantheon',cost:2,synergies:['δ��սʿ','��ʿ','ħ��ʦ'],role:'����̹��',items:['����','��ͽ����','���׶���']},
+  // 3��
+  {name:'����С��',avatar:'images/����С��.png',en:'Miss Fortune',cost:3,synergies:['��װս��'],role:'����',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'������',avatar:'images/������.png',en:'Illaoi',cost:3,synergies:['����ս��','��װսʿ','������'],role:'ħ��̹��',items:['����','��ͽ����','����֮צ']},
+  {name:'������',avatar:'images/������.png',en:'Aurora',cost:3,synergies:['����ս��','����'],role:'ħ��ʩ����',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'����',avatar:'images/����.png',en:'Fizz',cost:3,synergies:['ľ����','����'],role:'ħ���ո���',items:['����ʹ֮��','���Է�','�����Ŀ�֮��']},
+  {name:'ï��',avatar:'images/ï��.png',en:'Maokai',cost:3,synergies:['�����ع���','��ʿ'],role:'ħ��̹��',items:['����','��ͽ����','���׶���']},
+  {name:'��ɯ',avatar:'images/��ɯ.png',en:"Kai'Sa",cost:3,synergies:['����','����'],role:'����ʩ����',items:['�����Ŀ�֮��','��⻤��','���˲���']},
+  {name:'�����',avatar:'images/�����.png',en:'Urgot',cost:3,synergies:['�������','��ʿ','��սʿ'],role:'����սʿ',items:['��Ѫ��','�޾�֮��','̩̹�ļ��']},
+  {name:'ά����',avatar:'images/ά����.png',en:'Viktor',cost:3,synergies:['�����ع�','����'],role:'ħ��ʩ����',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'ɯ����',avatar:'images/ɯ����.png',en:'Samira',cost:3,synergies:['̫���ɶ�','����'],role:'����ʩ����',items:['�޾�֮��','��������','��Ѫ��']},
+  {name:'�¶�',avatar:'images/�¶�.png',en:'Ornn',cost:3,synergies:['̫���ɶ�','������ʿ'],role:'ħ��̹��',items:['���׶���','ʯ���ʯ���','��ͽ����']},
+  {name:'��',avatar:'images/��.png',en:'Lulu',cost:3,synergies:['������','ħ��ʦ'],role:'ħ��ʩ����',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'�찲��',avatar:'images/�찲��.png',en:'Diana',cost:3,synergies:['����','��ս��'],role:'ħ��սʿ',items:['����֮צ','����','��ͽ����']},
+  {name:'����˹��',avatar:'images/����˹��.png',en:'Rhaast',cost:3,synergies:['������'],role:'����̹��',items:['����','��ͽ����','���׶���']},
+  // 4��
+  {name:'��Ī˹',avatar:'images/��Ī˹.png',en:'Rammus',cost:4,synergies:['ľ����','������ʿ'],role:'ħ��̹��',items:['���̱���','��ͽ����','���׶���']},
+  {name:'����',avatar:'images/����.png',en:'Corki',cost:4,synergies:['ľ����','֯����'],role:'����ʩ����',items:['���˲���','��⻤��','�����Ŀ�֮��']},
+  {name:'ǧ��',avatar:'images/ǧ��.png',en:'Kindred',cost:4,synergies:['�����ع���','��ս��'],role:'����Cλ',items:['�����Ŀ�֮��','�޾�֮��','��������']},
+  {name:'������',avatar:'images/������.png',en:'Karma',cost:4,synergies:['����','����'],role:'ħ��ʩ����',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'��������������',avatar:'images/��������������.png',en:'Aurelion Sol',cost:4,synergies:['�������','����'],role:'ħ��ʩ����',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'��������',avatar:'images/��������.png',en:'Super Mech',cost:4,synergies:['�������','����'],role:'����̹��',items:['����','��ͽ����','ʯ���ʯ���']},
+  {name:'��',avatar:'images/��.png',en:'Master Yi',cost:4,synergies:['�����ع�','��սʿ'],role:'����սʿ',items:['�����Ŀ�֮��','��Ѫ��','̩̹�ļ��']},
+  {name:'����',avatar:'images/����.png',en:'Nami',cost:4,synergies:['̫���ɶ�','ħ��ʦ'],role:'ħ��ʩ����',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'ŬŬ��������',avatar:'images/ŬŬ��������.png',en:'Nunu',cost:4,synergies:['������','��װսʿ'],role:'ħ��̹��',items:['��ͽ����','����','����֮צ']},
+  {name:'����',avatar:'images/����.png',en:'Riven',cost:4,synergies:['δ��սʿ','����'],role:'����սʿ',items:['�����Ŀ�֮��','��Ѫ��','̩̹�ļ��']},
+  {name:'��ܽ��',avatar:'images/��ܽ��.png',en:'LeBlanc',cost:4,synergies:['����','������'],role:'ħ��Cλ',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'ϼ',avatar:'images/ϼ.png',en:'Xayah',cost:4,synergies:['������','����'],role:'����Cλ',items:['�޾�֮��','��������','�����Ŀ�֮��']},
+  {name:'��ķ',avatar:'images/��ķ.png',en:'Tahm Kench',cost:4,synergies:['���˼�˾','��ʿ'],role:'ħ��̹��',items:['����','��ͽ����','����֮צ']},
+  // 5��
+  {name:'�͵�',avatar:'images/�͵�.png',en:'Bard',cost:5,synergies:['ľ����','����'],role:'ħ��ʩ����',items:['����ʹ֮��','���Է�','�����Ŀ�֮��']},
+  {name:'�ư���',avatar:'images/�ư���.png',en:'Fiora',cost:5,synergies:['����','����ս��','��սʿ'],role:'����սʿ',items:['�޾�֮��','��Ѫ��','̩̹�ļ��']},
+  {name:'��',avatar:'images/��.png',en:'Jhin',cost:5,synergies:['����','������','����'],role:'����Cλ',items:['�޾�֮��','���˲���','��������']},
+  {name:'�����',avatar:'images/�����.png',en:'Blitzcrank',cost:5,synergies:['���ǻ�����','̫���ɶ�','��װսʿ'],role:'ħ��սʿ',items:['����','��ͽ����','����֮צ']},
+  {name:'���',avatar:'images/���.png',en:'Sona',cost:5,synergies:['���ָ�ӹ�','�����ع�','������'],role:'ħ��ʩ����',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'ޱ��˿',avatar:'images/ޱ��˿.png',en:'Vex',cost:5,synergies:['ĩ��ʹ��'],role:'ħ��Cλ',items:['����ʹ֮��','���Է�','��⻤��']},
+  {name:'��',avatar:'images/��.png',en:'Shen',cost:5,synergies:['ĺ������','������ʿ'],role:'ħ��սʿ',items:['����','����֮צ','��ͽ����']},
+  {name:'��',avatar:'images/��.png',en:'Zed',cost:5,synergies:['��ɷ'],role:'����սʿ',items:['�޾�֮��','ҹ֮����','��Ѫ��']},
+  {name:'���׸�˹',avatar:'images/���׸�˹.png',en:'Graves',cost:5,synergies:['����1��'],role:'����Cλ',items:['�޾�֮��','���˲���','��������']},
+  {name:'Ī����',avatar:'images/Ī����.png',en:'Morgana',cost:5,synergies:['�ڰ�ħŮ'],role:'ħ��սʿ',items:['����֮צ','����','��ͽ����']}
+];
+
+const COST_NAMES = {1:'1��Ӣ��',2:'2��Ӣ��',3:'3��Ӣ��',4:'4��Ӣ��',5:'5��Ӣ��'};
+const COST_STARS = {1:'��',2:'���',3:'����',4:'�����',5:'������'};
+
+// Avatar gradient colors by hero name first char for variety
+function avatarGrad(name, cost) {
+  const hue = (name.charCodeAt(0) * 37 + name.charCodeAt(name.length-1) * 53) % 360;
+  const sat = 55 + (cost * 5);
+  const light = 30 + (cost * 4);
+  return `linear-gradient(135deg, hsl(${hue},${sat}%,${light}%), hsl(${(hue+40)%360},${sat+10}%,${light-10}%))`;
+}
+
+function getAvatarHtml(h, firstChar) {
+  if (!h.avatar) return firstChar;
+  return '<img src="' + h.avatar + '" alt="' + h.name + '" onerror="this.style.display=\'none\'">';
+}
+function getItemClass(item) {
+  return 'item-' + (ITEM_STYLES[item] || 'util');
+}
+function getItemIcon(item) {
+  const url = ITEM_IMAGES[item];
+  if (url) return '<img src="' + url + '" alt="' + item + '">';
+  return ITEM_ABBR[item] || '?';
+}
+
+function renderHeroes(heroes) {
+  const content = document.getElementById('heroContent');
+  const noResults = document.getElementById('noResults');
+  
+  if (heroes.length === 0) {
+    content.innerHTML = '';
+    noResults.classList.add('show');
+    return;
+  }
+  noResults.classList.remove('show');
+
+  // Group by cost
+  const grouped = {};
+  heroes.forEach(h => {
+    if (!grouped[h.cost]) grouped[h.cost] = [];
+    grouped[h.cost].push(h);
+  });
+
+  let html = '';
+  for (let cost = 1; cost <= 5; cost++) {
+    if (!grouped[cost]) continue;
+    const list = grouped[cost];
+    html += `<div class="cost-section cost-${cost}">
+      <div class="cost-header">
+        <div class="cost-icon">${cost}</div>
+        <div>
+          <div class="cost-title">${COST_NAMES[cost]}</div>
+          <div class="cost-stars">${COST_STARS[cost]}</div>
+        </div>
+        <div class="cost-count">${list.length} λӢ��</div>
+      </div>
+      <div class="hero-grid">`;
+
+    list.forEach((h, i) => {
+      const delay = i * 0.05;
+      const firstChar = h.name.charAt(0);
+      html += `<div class="hero-card" style="animation-delay:${delay}s" 
+        data-cost="${h.cost}" data-role="${h.role}" data-search="${h.name} ${h.en} ${h.synergies.join(' ')} ${h.role} ${h.items.join(' ')}">
+        <div class="hero-top">
+          <div class="hero-avatar" style="background:${avatarGrad(h.name, h.cost)}">${getAvatarHtml(h, firstChar)}</div>
+          <div class="hero-info">
+            <div class="hero-name">${h.name} <span class="hero-name-en">${h.en}</span></div>
+            <div class="hero-stars"><span>${COST_STARS[h.cost]}</span></div>
+            <div class="role-badge">${h.role}</div>
+          </div>
+        </div>
+        <div class="synergies">
+          ${h.synergies.map(s => `<span class="synergy-tag">${s}</span>`).join('')}
+        </div>
+        <div class="items-section">
+          <div class="items-label">? �Ƽ�װ��</div>
+          <div class="items-list">
+            ${h.items.map(item => `<div class="item-badge">
+              <div class="item-icon ${getItemClass(item)}">${getItemIcon(item)}</div>
+              <span>${item}</span>
+            </div>`).join('')}
+          </div>
+        </div>
+      </div>`;
+    });
+
+    html += `</div></div>`;
+  }
+  content.innerHTML = html;
+}
+
+// Initial render
+renderHeroes(HEROES);
+
+// Search
+const searchInput = document.getElementById('searchInput');
+let searchTimer;
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    const q = searchInput.value.trim().toLowerCase();
+    // Reset filter buttons
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+    
+    if (!q) {
+      renderHeroes(HEROES);
+      return;
+    }
+    const filtered = HEROES.filter(h => {
+      const searchStr = `${h.name} ${h.en} ${h.synergies.join(' ')} ${h.role} ${h.items.join(' ')}`.toLowerCase();
+      return searchStr.includes(q);
+    });
+    renderHeroes(filtered);
+  }, 200);
+});
+
+// Filter buttons
+document.getElementById('filterButtons').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  searchInput.value = '';
+  
+  const filter = btn.dataset.filter;
+  if (filter === 'all') {
+    renderHeroes(HEROES);
+    return;
+  }
+  
+  // Cost filter
+  if (/^[1-5]$/.test(filter)) {
+    renderHeroes(HEROES.filter(h => h.cost === parseInt(filter)));
+    return;
+  }
+  
+  // Role filter
+  renderHeroes(HEROES.filter(h => h.role.includes(filter)));
+});
+
+// Back to top
+window.addEventListener('scroll', () => {
+  document.getElementById('backTop').classList.toggle('show', window.scrollY > 300);
+});
+</script>
+</body>
+</html>
