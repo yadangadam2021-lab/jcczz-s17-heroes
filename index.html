@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -200,10 +200,11 @@ header .season-badge{
   transform:translateY(-1px);
 }
 .item-icon{
-  width:22px;height:22px;border-radius:5px;flex-shrink:0;
+  width:26px;height:26px;border-radius:5px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
-  font-size:.65em;color:#fff;font-weight:700;
+  font-size:.65em;color:#fff;font-weight:700;overflow:hidden;
 }
+.item-icon img{width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;}
 .item-ad{background:linear-gradient(135deg,#e53935,#b71c1c)}
 .item-ap{background:linear-gradient(135deg,#7B1FA2,#4A148C)}
 .item-tank{background:linear-gradient(135deg,#37474F,#263238)}
@@ -288,91 +289,107 @@ footer{
 
 <script>
 const ITEM_STYLES = {
-  '无尽之刃':'ad','巨人杀手':'ad','最后的轻语':'ad','朔极之矛':'ad','夜之锋刃':'ad',
-  '珠光弹幕炮':'crit','饮血剑':'ad','鬼索的狂暴之刃':'as','斯塔提克电刃':'as',
-  '大天使之杖':'ap','蓝BUFF':'ap','法术回响':'ap','卢安娜的飓风':'as',
-  '泰坦的坚决':'tank','巨龙之爪':'tank','龙之爪':'tank','救赎':'util','正义之手':'util',
+  '无尽之刃':'ad','巨人捕手':'ad','最后的轻语':'ad','朔极之矛':'ad','夜之锋刃':'ad',
+  '珠光护手':'crit','饮血剑':'ad','鬼索的狂暴之刃':'as','斯塔提克电刃':'as',
+  '大天使之杖':'ap','蓝霸符':'ap','法术回响':'ap','卢安娜的飓风':'as',
+  '泰坦的坚决':'tank','巨龙之爪':'tank','救赎':'util','正义之手':'util',
   '狂徒铠甲':'tank','日炎斗篷':'tank','石像鬼石板甲':'tank','棘刺背心':'tank',
   '离子火花':'ap'
 };
 const ITEM_ABBR = {
-  '无尽之刃':'⚔','巨人杀手':'🗡','最后的轻语':'💨','朔极之矛':'🔱','夜之锋刃':'🌙',
-  '珠光弹幕炮':'💎','饮血剑':'🩸','鬼索的狂暴之刃':'⚡','斯塔提克电刃':'⚡',
-  '大天使之杖':'✨','蓝BUFF':'💧','法术回响':'🔮','卢安娜的飓风':'🌪',
-  '泰坦的坚决':'🛡','巨龙之爪':'🐉','龙之爪':'🐉','救赎':'💚','正义之手':'✋',
+  '无尽之刃':'⚔','巨人捕手':'🗡','最后的轻语':'💨','朔极之矛':'🔱','夜之锋刃':'🌙',
+  '珠光护手':'💎','饮血剑':'🩸','鬼索的狂暴之刃':'⚡','斯塔提克电刃':'⚡',
+  '大天使之杖':'✨','蓝霸符':'💧','法术回响':'🔮','卢安娜的飓风':'🌪',
+  '泰坦的坚决':'🛡','巨龙之爪':'🐉','救赎':'💚','正义之手':'✋',
   '狂徒铠甲':'❤','日炎斗篷':'🔥','石像鬼石板甲':'🗿','棘刺背心':'🦔',
   '离子火花':'💫'
+};
+const ITEM_IMAGES = {
+  '无尽之刃':'https://mumu-apk.fp.ps.netease.com/file/65bb5e213dfac400fc846c6buVEIXFbw05',
+  '巨人捕手':'https://mumu-apk.fp.ps.netease.com/file/65bb639ce0559a3acee6d482t0aDBil105',
+  '最后的轻语':'https://mumu-apk.fp.ps.netease.com/file/65bb63a553d07c8a127bdb25j4vd8NYk05',
+  '朔极之矛':'https://mumu-apk.fp.ps.netease.com/file/65bb5e2838579e891246dc290KwLRXVx05',
+  '珠光护手':'https://mumu-apk.fp.ps.netease.com/file/65bb63422ed7957a6d15e827QSmyeJmE05',
+  '鬼索的狂暴之刃':'https://mumu-apk.fp.ps.netease.com/file/65bb5e452efe32e925e58722y39oiEXM05',
+  '大天使之杖':'https://mumu-apk.fp.ps.netease.com/file/65bb5e532b4bc4105141a89afJ1oZTZD05',
+  '蓝霸符':'https://mumu-apk.fp.ps.netease.com/file/65bb63acce977305cf74308fsuf2bk3U05',
+  '泰坦的坚决':'https://mumu-apk.fp.ps.netease.com/file/65bb63a11aa419a4b8df5608OvBIiwX605',
+  '巨龙之爪':'https://mumu-apk.fp.ps.netease.com/file/65bb6335872e45254347e367Tp8JFWPd05',
+  '正义之手':'https://mumu-apk.fp.ps.netease.com/file/65bb6345ecdeb81033d580bcF2GhCClj05',
+  '狂徒铠甲':'https://mumu-apk.fp.ps.netease.com/file/65bb633cce977305cf742bfdUe9cjVqx05',
+  '石像鬼石板甲':'https://mumu-apk.fp.ps.netease.com/file/65bb63af9f8a48a4d6a9475bd8PxN5t405',
+  '离子火花':'https://mumu-apk.fp.ps.netease.com/file/65bb6352bfc163b009f94c59QUyjoYVV05'
 };
 
 const HEROES = [
   // 1费
   {name:'贝蕾亚',en:"Bel'Veth",cost:1,synergies:['幻灵战队','海魔人','游侠'],role:'物理战士',items:['饮血剑','无尽之刃','泰坦的坚决']},
-  {name:'波比',en:'Poppy',cost:1,synergies:['木灵族','堡垒卫士'],role:'魔法坦克',items:['救赎','狂徒铠甲','龙之爪']},
-  {name:'维迦',en:'Veigar',cost:1,synergies:['木灵族','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝BUFF','珠光弹幕炮']},
+  {name:'波比',en:'Poppy',cost:1,synergies:['木灵族','堡垒卫士'],role:'魔法坦克',items:['救赎','狂徒铠甲','巨龙之爪']},
+  {name:'维迦',en:'Veigar',cost:1,synergies:['木灵族','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
   {name:'亚托克斯',en:'Aatrox',cost:1,synergies:['新星特攻队','堡垒卫士'],role:'物理坦克',items:['救赎','狂徒铠甲','日炎斗篷']},
   {name:'凯特琳',en:'Caitlyn',cost:1,synergies:['新星特攻队','织命人'],role:'物理战士',items:['饮血剑','无尽之刃','泰坦的坚决']},
-  {name:'提莫',en:'Teemo',cost:1,synergies:['太空律动','牧羊人'],role:'魔法C位',items:['大天使之杖','蓝BUFF','珠光弹幕炮']},
-  {name:'内瑟斯',en:'Nasus',cost:1,synergies:['太空律动','重装战士'],role:'魔法坦克',items:['救赎','狂徒铠甲','龙之爪']},
-  {name:'崔斯特',en:'Twisted Fate',cost:1,synergies:['观星者','织命人'],role:'魔法施法者',items:['大天使之杖','蓝BUFF','珠光弹幕炮']},
-  {name:'泰隆',en:'Talon',cost:1,synergies:['观星者','游侠'],role:'物理收割者',items:['无尽之刃','夜之锋刃','珠光弹幕炮']},
-  {name:'伊泽瑞尔',en:'Ezreal',cost:1,synergies:['未来战士','狙神'],role:'物理施法者',items:['朔极之矛','蓝BUFF','巨人杀手']},
-  {name:'蕾欧娜',en:'Leona',cost:1,synergies:['法官','重装战士'],role:'魔法坦克',items:['救赎','狂徒铠甲','龙之爪']},
+  {name:'提莫',en:'Teemo',cost:1,synergies:['太空律动','牧羊人'],role:'魔法C位',items:['大天使之杖','蓝霸符','珠光护手']},
+  {name:'内瑟斯',en:'Nasus',cost:1,synergies:['太空律动','重装战士'],role:'魔法坦克',items:['救赎','狂徒铠甲','巨龙之爪']},
+  {name:'崔斯特',en:'Twisted Fate',cost:1,synergies:['观星者','织命人'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
+  {name:'泰隆',en:'Talon',cost:1,synergies:['观星者','游侠'],role:'物理收割者',items:['无尽之刃','夜之锋刃','珠光护手']},
+  {name:'伊泽瑞尔',en:'Ezreal',cost:1,synergies:['未来战士','狙神'],role:'物理施法者',items:['朔极之矛','蓝霸符','巨人捕手']},
+  {name:'蕾欧娜',en:'Leona',cost:1,synergies:['法官','重装战士'],role:'魔法坦克',items:['救赎','狂徒铠甲','巨龙之爪']},
   {name:'科加斯',en:"Cho'Gath",cost:1,synergies:['暗星','斗士'],role:'魔法坦克',items:['救赎','狂徒铠甲','日炎斗篷']},
-  {name:'丽桑卓',en:'Lissandra',cost:1,synergies:['暗星','牧羊人','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝BUFF','法术回响']},
+  {name:'丽桑卓',en:'Lissandra',cost:1,synergies:['暗星','牧羊人','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝霸符','法术回响']},
   {name:'雷克塞',en:"Rek'Sai",cost:1,synergies:['海魔人','斗士'],role:'魔法坦克',items:['救赎','狂徒铠甲','日炎斗篷']},
   // 2费
   {name:'卑尔维斯',en:"Bel'Veth II",cost:2,synergies:['海魔人','挑战者','狂战士'],role:'物理战士',items:['鬼索的狂暴之刃','饮血剑','泰坦的坚决']},
   {name:'阿卡丽',en:'Akali',cost:2,synergies:['新星特攻队','狂战士'],role:'物理战士',items:['饮血剑','无尽之刃','泰坦的坚决']},
-  {name:'金克丝',en:'Jinx',cost:2,synergies:['幻灵战队','挑战者'],role:'物理C位',items:['鬼索的狂暴之刃','巨人杀手','珠光弹幕炮']},
+  {name:'金克丝',en:'Jinx',cost:2,synergies:['幻灵战队','挑战者'],role:'物理C位',items:['鬼索的狂暴之刃','巨人捕手','珠光护手']},
   {name:'纳尔',en:'Gnar',cost:2,synergies:['木灵族','狙神'],role:'物理战士',items:['饮血剑','无尽之刃','泰坦的坚决']},
-  {name:'派克',en:'Pyke',cost:2,synergies:['灵能特工','旅人'],role:'物理收割者',items:['无尽之刃','夜之锋刃','珠光弹幕炮']},
-  {name:'古拉加斯',en:'Gragas',cost:2,synergies:['灵能特工','斗士'],role:'魔法坦克',items:['救赎','狂徒铠甲','龙之爪']},
-  {name:'格温',en:'Gwen',cost:2,synergies:['太空律动','游侠'],role:'魔法收割者',items:['大天使之杖','蓝BUFF','鬼索的狂暴之刃']},
-  {name:'贾克斯',en:'Jax',cost:2,synergies:['观星者','堡垒卫士'],role:'魔法坦克',items:['救赎','狂徒铠甲','龙之爪']},
-  {name:'米利欧',en:'Milio',cost:2,synergies:['未来战士','织命人'],role:'魔法施法者',items:['大天使之杖','蓝BUFF','卢安娜的飓风']},
-  {name:'佐伊',en:'Zoe',cost:2,synergies:['法官','神谕'],role:'魔法施法者',items:['大天使之杖','蓝BUFF','法术回响']},
-  {name:'小木灵',en:'Lillia',cost:2,synergies:['木灵族','牧羊人','旅人'],role:'魔法坦克',items:['救赎','狂徒铠甲','龙之爪']},
+  {name:'派克',en:'Pyke',cost:2,synergies:['灵能特工','旅人'],role:'物理收割者',items:['无尽之刃','夜之锋刃','珠光护手']},
+  {name:'古拉加斯',en:'Gragas',cost:2,synergies:['灵能特工','斗士'],role:'魔法坦克',items:['救赎','狂徒铠甲','巨龙之爪']},
+  {name:'格温',en:'Gwen',cost:2,synergies:['太空律动','游侠'],role:'魔法收割者',items:['大天使之杖','蓝霸符','鬼索的狂暴之刃']},
+  {name:'贾克斯',en:'Jax',cost:2,synergies:['观星者','堡垒卫士'],role:'魔法坦克',items:['救赎','狂徒铠甲','巨龙之爪']},
+  {name:'米利欧',en:'Milio',cost:2,synergies:['未来战士','织命人'],role:'魔法施法者',items:['大天使之杖','蓝霸符','卢安娜的飓风']},
+  {name:'佐伊',en:'Zoe',cost:2,synergies:['法官','神谕'],role:'魔法施法者',items:['大天使之杖','蓝霸符','法术回响']},
+  {name:'小木灵',en:'Lillia',cost:2,synergies:['木灵族','牧羊人','旅人'],role:'魔法坦克',items:['救赎','狂徒铠甲','巨龙之爪']},
   {name:'莫德凯撒',en:'Mordekaiser',cost:2,synergies:['暗星','神谕','重装战士'],role:'魔法坦克',items:['救赎','狂徒铠甲','日炎斗篷']},
   {name:'潘森',en:'Pantheon',cost:2,synergies:['未来战士','斗士','魔术师'],role:'物理坦克',items:['救赎','狂徒铠甲','日炎斗篷']},
   // 3费
-  {name:'厄运小姐',en:'Miss Fortune',cost:3,synergies:['武装战姬'],role:'特殊',items:['大天使之杖','蓝BUFF','珠光弹幕炮']},
-  {name:'俄洛伊',en:'Illaoi',cost:3,synergies:['幻灵战队','重装战士','牧羊人'],role:'魔法坦克',items:['救赎','狂徒铠甲','龙之爪']},
-  {name:'阿萝拉',en:'Aurora',cost:3,synergies:['幻灵战队','旅人'],role:'魔法施法者',items:['大天使之杖','蓝BUFF','珠光弹幕炮']},
-  {name:'菲兹',en:'Fizz',cost:3,synergies:['木灵族','游侠'],role:'魔法收割者',items:['大天使之杖','蓝BUFF','鬼索的狂暴之刃']},
+  {name:'厄运小姐',en:'Miss Fortune',cost:3,synergies:['武装战姬'],role:'特殊',items:['大天使之杖','蓝霸符','珠光护手']},
+  {name:'俄洛伊',en:'Illaoi',cost:3,synergies:['幻灵战队','重装战士','牧羊人'],role:'魔法坦克',items:['救赎','狂徒铠甲','巨龙之爪']},
+  {name:'阿萝拉',en:'Aurora',cost:3,synergies:['幻灵战队','旅人'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
+  {name:'菲兹',en:'Fizz',cost:3,synergies:['木灵族','游侠'],role:'魔法收割者',items:['大天使之杖','蓝霸符','鬼索的狂暴之刃']},
   {name:'茂凯',en:'Maokai',cost:3,synergies:['新星特攻队','斗士'],role:'魔法坦克',items:['救赎','狂徒铠甲','日炎斗篷']},
-  {name:'卡莎',en:"Kai'Sa",cost:3,synergies:['暗星','游侠'],role:'物理施法者',items:['鬼索的狂暴之刃','珠光弹幕炮','巨人杀手']},
+  {name:'卡莎',en:"Kai'Sa",cost:3,synergies:['暗星','游侠'],role:'物理施法者',items:['鬼索的狂暴之刃','珠光护手','巨人捕手']},
   {name:'厄加特',en:'Urgot',cost:3,synergies:['霸天机甲','斗士','狂战士'],role:'物理战士',items:['饮血剑','无尽之刃','泰坦的坚决']},
-  {name:'维克托',en:'Viktor',cost:3,synergies:['灵能特工','神谕'],role:'魔法施法者',items:['大天使之杖','蓝BUFF','珠光弹幕炮']},
+  {name:'维克托',en:'Viktor',cost:3,synergies:['灵能特工','神谕'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
   {name:'莎弥拉',en:'Samira',cost:3,synergies:['太空律动','狙神'],role:'物理施法者',items:['无尽之刃','最后的轻语','饮血剑']},
   {name:'奥恩',en:'Ornn',cost:3,synergies:['太空律动','堡垒卫士'],role:'魔法坦克',items:['日炎斗篷','石像鬼石板甲','狂徒铠甲']},
-  {name:'璐璐',en:'Lulu',cost:3,synergies:['观星者','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝BUFF','法术回响']},
-  {name:'黛安娜',en:'Diana',cost:3,synergies:['法官','挑战者'],role:'魔法战士',items:['龙之爪','救赎','狂徒铠甲']},
+  {name:'璐璐',en:'Lulu',cost:3,synergies:['观星者','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝霸符','法术回响']},
+  {name:'黛安娜',en:'Diana',cost:3,synergies:['法官','挑战者'],role:'魔法战士',items:['巨龙之爪','救赎','狂徒铠甲']},
   {name:'拉亚斯特',en:'Rhaast',cost:3,synergies:['救世主'],role:'物理坦克',items:['救赎','狂徒铠甲','日炎斗篷']},
   // 4费
   {name:'拉莫斯',en:'Rammus',cost:4,synergies:['木灵族','堡垒卫士'],role:'魔法坦克',items:['棘刺背心','狂徒铠甲','日炎斗篷']},
-  {name:'库奇',en:'Corki',cost:4,synergies:['木灵族','织命人'],role:'物理施法者',items:['巨人杀手','珠光弹幕炮','鬼索的狂暴之刃']},
+  {name:'库奇',en:'Corki',cost:4,synergies:['木灵族','织命人'],role:'物理施法者',items:['巨人捕手','珠光护手','鬼索的狂暴之刃']},
   {name:'千珏',en:'Kindred',cost:4,synergies:['新星特攻队','挑战者'],role:'物理C位',items:['鬼索的狂暴之刃','无尽之刃','最后的轻语']},
-  {name:'卡尔玛',en:'Karma',cost:4,synergies:['暗星','旅人'],role:'魔法施法者',items:['大天使之杖','蓝BUFF','珠光弹幕炮']},
-  {name:'奥瑞利安·索尔',en:'Aurelion Sol',cost:4,synergies:['霸天机甲','神谕'],role:'魔法施法者',items:['大天使之杖','蓝BUFF','珠光弹幕炮']},
+  {name:'卡尔玛',en:'Karma',cost:4,synergies:['暗星','旅人'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
+  {name:'奥瑞利安·索尔',en:'Aurelion Sol',cost:4,synergies:['霸天机甲','神谕'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
   {name:'超级机甲',en:'Super Mech',cost:4,synergies:['霸天机甲','旅人'],role:'物理坦克',items:['救赎','狂徒铠甲','石像鬼石板甲']},
   {name:'易',en:'Master Yi',cost:4,synergies:['灵能特工','狂战士'],role:'物理战士',items:['鬼索的狂暴之刃','饮血剑','泰坦的坚决']},
-  {name:'娜美',en:'Nami',cost:4,synergies:['太空律动','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝BUFF','法术回响']},
-  {name:'努努和威朗普',en:'Nunu',cost:4,synergies:['观星者','重装战士'],role:'魔法坦克',items:['狂徒铠甲','救赎','龙之爪']},
+  {name:'娜美',en:'Nami',cost:4,synergies:['太空律动','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝霸符','法术回响']},
+  {name:'努努和威朗普',en:'Nunu',cost:4,synergies:['观星者','重装战士'],role:'魔法坦克',items:['狂徒铠甲','救赎','巨龙之爪']},
   {name:'锐雯',en:'Riven',cost:4,synergies:['未来战士','游侠'],role:'物理战士',items:['鬼索的狂暴之刃','饮血剑','泰坦的坚决']},
-  {name:'乐芙兰',en:'LeBlanc',cost:4,synergies:['法官','牧羊人'],role:'魔法C位',items:['大天使之杖','蓝BUFF','珠光弹幕炮']},
+  {name:'乐芙兰',en:'LeBlanc',cost:4,synergies:['法官','牧羊人'],role:'魔法C位',items:['大天使之杖','蓝霸符','珠光护手']},
   {name:'霞',en:'Xayah',cost:4,synergies:['观星者','狙神'],role:'物理C位',items:['无尽之刃','最后的轻语','鬼索的狂暴之刃']},
-  {name:'塔姆',en:'Tahm Kench',cost:4,synergies:['命运祭司','斗士'],role:'魔法坦克',items:['救赎','狂徒铠甲','龙之爪']},
+  {name:'塔姆',en:'Tahm Kench',cost:4,synergies:['命运祭司','斗士'],role:'魔法坦克',items:['救赎','狂徒铠甲','巨龙之爪']},
   // 5费
-  {name:'巴德',en:'Bard',cost:5,synergies:['木灵族','神谕'],role:'魔法施法者',items:['大天使之杖','蓝BUFF','鬼索的狂暴之刃']},
+  {name:'巴德',en:'Bard',cost:5,synergies:['木灵族','神谕'],role:'魔法施法者',items:['大天使之杖','蓝霸符','鬼索的狂暴之刃']},
   {name:'菲奥娜',en:'Fiora',cost:5,synergies:['斗神','幻灵战队','狂战士'],role:'物理战士',items:['无尽之刃','饮血剑','泰坦的坚决']},
-  {name:'烬',en:'Jhin',cost:5,synergies:['暗星','灭星尊','狙神'],role:'物理C位',items:['无尽之刃','巨人杀手','最后的轻语']},
-  {name:'布里茨',en:'Blitzcrank',cost:5,synergies:['汪星机器人','太空律动','重装战士'],role:'魔法战士',items:['救赎','狂徒铠甲','龙之爪']},
-  {name:'娑娜',en:'Sona',cost:5,synergies:['最高指挥官','灵能特工','牧羊人'],role:'魔法施法者',items:['大天使之杖','蓝BUFF','法术回响']},
-  {name:'薇古丝',en:'Vex',cost:5,synergies:['末日使者'],role:'魔法C位',items:['大天使之杖','蓝BUFF','珠光弹幕炮']},
-  {name:'慎',en:'Shen',cost:5,synergies:['暮光铁壁','堡垒卫士'],role:'魔法战士',items:['救赎','龙之爪','狂徒铠甲']},
+  {name:'烬',en:'Jhin',cost:5,synergies:['暗星','灭星尊','狙神'],role:'物理C位',items:['无尽之刃','巨人捕手','最后的轻语']},
+  {name:'布里茨',en:'Blitzcrank',cost:5,synergies:['汪星机器人','太空律动','重装战士'],role:'魔法战士',items:['救赎','狂徒铠甲','巨龙之爪']},
+  {name:'娑娜',en:'Sona',cost:5,synergies:['最高指挥官','灵能特工','牧羊人'],role:'魔法施法者',items:['大天使之杖','蓝霸符','法术回响']},
+  {name:'薇古丝',en:'Vex',cost:5,synergies:['末日使者'],role:'魔法C位',items:['大天使之杖','蓝霸符','珠光护手']},
+  {name:'慎',en:'Shen',cost:5,synergies:['暮光铁壁','堡垒卫士'],role:'魔法战士',items:['救赎','巨龙之爪','狂徒铠甲']},
   {name:'劫',en:'Zed',cost:5,synergies:['天煞'],role:'物理战士',items:['无尽之刃','夜之锋刃','饮血剑']},
-  {name:'格雷福斯',en:'Graves',cost:5,synergies:['军工1号'],role:'物理C位',items:['无尽之刃','巨人杀手','最后的轻语']},
-  {name:'莫甘娜',en:'Morgana',cost:5,synergies:['黑暗魔女'],role:'魔法战士',items:['龙之爪','救赎','狂徒铠甲']}
+  {name:'格雷福斯',en:'Graves',cost:5,synergies:['军工1号'],role:'物理C位',items:['无尽之刃','巨人捕手','最后的轻语']},
+  {name:'莫甘娜',en:'Morgana',cost:5,synergies:['黑暗魔女'],role:'魔法战士',items:['巨龙之爪','救赎','狂徒铠甲']}
 ];
 
 const COST_NAMES = {1:'1费英雄',2:'2费英雄',3:'3费英雄',4:'4费英雄',5:'5费英雄'};
@@ -388,6 +405,11 @@ function avatarGrad(name, cost) {
 
 function getItemClass(item) {
   return 'item-' + (ITEM_STYLES[item] || 'util');
+}
+function getItemIcon(item) {
+  const url = ITEM_IMAGES[item];
+  if (url) return '<img src="' + url + '" alt="' + item + '">';
+  return ITEM_ABBR[item] || '?';
 }
 
 function renderHeroes(heroes) {
@@ -443,7 +465,7 @@ function renderHeroes(heroes) {
           <div class="items-label">▸ 推荐装备</div>
           <div class="items-list">
             ${h.items.map(item => `<div class="item-badge">
-              <div class="item-icon ${getItemClass(item)}">${ITEM_ABBR[item]||'?'}</div>
+              <div class="item-icon ${getItemClass(item)}">${getItemIcon(item)}</div>
               <span>${item}</span>
             </div>`).join('')}
           </div>
