@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -14,55 +14,88 @@
 @keyframes borderRotate{0%{--angle:0deg}100%{--angle:360deg}}
 body{
   font-family:'Microsoft YaHei','PingFang SC',sans-serif;
-  background:#f4f6f9;
-  color:#333;min-height:100vh;
+  background:linear-gradient(135deg,#0a0a1a 0%,#1a0a2e 25%,#0d1b2a 50%,#1a0a2e 75%,#0a0a1a 100%);
+  color:#e0e0e0;min-height:100vh;
+  background-attachment:fixed;
+}
+body::before{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  background:radial-gradient(ellipse at 20% 50%,rgba(100,50,200,.08) 0%,transparent 50%),
+  radial-gradient(ellipse at 80% 20%,rgba(50,100,200,.08) 0%,transparent 50%),
+  radial-gradient(ellipse at 50% 80%,rgba(200,50,150,.05) 0%,transparent 50%);
+  pointer-events:none;z-index:0;
 }
 .container{max-width:1400px;margin:0 auto;padding:20px;position:relative;z-index:1}
 header{text-align:center;padding:40px 20px 30px;position:relative}
 header h1{
-  font-size:2em;font-weight:900;color:#1a1a2e;letter-spacing:3px;
+  font-size:2.8em;font-weight:900;
+  background:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700,#fff176);
+  background-size:200% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:shimmer 3s linear infinite;
+  text-shadow:0 0 40px rgba(255,215,0,.3);
+  letter-spacing:4px;
 }
 header .subtitle{
-  font-size:.95em;color:#666;margin-top:4px;letter-spacing:2px;
+  font-size:1.1em;color:#8888cc;margin-top:8px;letter-spacing:6px;
 }
-header .season-badge{display:none}
-.stats-bar{display:none}
+header .season-badge{
+  display:inline-block;margin-top:15px;
+  padding:6px 24px;border-radius:20px;
+  background:linear-gradient(135deg,rgba(100,50,200,.3),rgba(50,100,255,.3));
+  border:1px solid rgba(150,100,255,.4);
+  font-size:.9em;color:#c0b0ff;letter-spacing:2px;
+}
+.stats-bar{
+  display:flex;justify-content:center;gap:30px;margin:20px 0;flex-wrap:wrap;
+}
+.stats-bar .stat{
+  background:rgba(255,255,255,.05);padding:8px 20px;border-radius:12px;
+  border:1px solid rgba(255,255,255,.08);font-size:.85em;
+}
+.stats-bar .stat span{color:#ffd700;font-weight:bold;margin-right:4px}
 .search-container{
   display:flex;justify-content:center;gap:12px;margin:25px auto;
   max-width:700px;flex-wrap:wrap;padding:0 20px;
 }
 .search-box{
-  flex:1;min-width:250px;padding:10px 18px;
-  border-radius:20px;border:1px solid #d0d5dd;
-  background:#fff;color:#333;font-size:.95em;
-  outline:none;transition:all .2s;
-  box-shadow:0 1px 4px rgba(0,0,0,.06);
+  flex:1;min-width:250px;padding:12px 20px;
+  border-radius:25px;border:1px solid rgba(150,100,255,.3);
+  background:rgba(20,10,40,.8);color:#e0e0e0;font-size:1em;
+  outline:none;transition:all .3s;
 }
-.search-box:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12)}
-.search-box::placeholder{color:#aaa}
+.search-box:focus{
+  border-color:rgba(150,100,255,.7);
+  box-shadow:0 0 20px rgba(100,50,200,.3);
+}
+.search-box::placeholder{color:#666}
 .filter-buttons{
   display:flex;justify-content:center;gap:8px;margin:15px auto;
   max-width:900px;flex-wrap:wrap;padding:0 20px;
 }
 .filter-btn{
-  padding:5px 14px;border-radius:14px;border:1px solid #d0d5dd;
-  background:#fff;color:#555;font-size:.82em;
-  cursor:pointer;transition:all .2s;white-space:nowrap;
+  padding:7px 16px;border-radius:18px;border:1px solid rgba(150,100,255,.25);
+  background:rgba(20,10,40,.6);color:#aaa;font-size:.85em;
+  cursor:pointer;transition:all .3s;white-space:nowrap;
 }
-.filter-btn:hover{background:#eef2ff;border-color:#6366f1;color:#6366f1}
-.filter-btn.active{background:#6366f1;border-color:#6366f1;color:#fff;box-shadow:0 2px 8px rgba(99,102,241,.25)}
+.filter-btn:hover,.filter-btn.active{
+  background:linear-gradient(135deg,rgba(100,50,200,.4),rgba(50,100,255,.4));
+  border-color:rgba(150,100,255,.6);color:#fff;
+  box-shadow:0 2px 15px rgba(100,50,200,.3);
+}
 .cost-section{margin:35px 0;animation:fadeIn .6s ease-out}
 .cost-header{
-  display:flex;align-items:center;gap:10px;margin-bottom:10px;
-  padding:8px 14px;border-radius:10px;background:#fff;
-  border-left:4px solid #aaa;box-shadow:0 1px 4px rgba(0,0,0,.06);
+  display:flex;align-items:center;gap:15px;margin-bottom:20px;
+  padding:15px 25px;border-radius:16px;position:relative;overflow:hidden;
 }
-.cost-header::before{display:none}
-.cost-1 .cost-header{border-color:#9e9e9e}
-.cost-2 .cost-header{border-color:#4caf50}
-.cost-3 .cost-header{border-color:#42a5f5}
-.cost-4 .cost-header{border-color:#ab47bc}
-.cost-5 .cost-header{border-color:#ffc107}
+.cost-header::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;opacity:.15;
+}
+.cost-1 .cost-header{background:linear-gradient(135deg,rgba(128,128,128,.2),rgba(80,80,80,.1));border-left:4px solid #aaa}
+.cost-2 .cost-header{background:linear-gradient(135deg,rgba(50,180,50,.2),rgba(30,120,30,.1));border-left:4px solid #4CAF50}
+.cost-3 .cost-header{background:linear-gradient(135deg,rgba(50,100,220,.2),rgba(30,60,150,.1));border-left:4px solid #42A5F5}
+.cost-4 .cost-header{background:linear-gradient(135deg,rgba(180,50,220,.2),rgba(120,30,150,.1));border-left:4px solid #AB47BC}
+.cost-5 .cost-header{background:linear-gradient(135deg,rgba(255,180,0,.2),rgba(180,120,0,.1));border-left:4px solid #FFC107}
 .cost-header .cost-icon{
   font-size:1.8em;width:50px;height:50px;display:flex;align-items:center;justify-content:center;
   border-radius:12px;font-weight:900;
@@ -81,15 +114,29 @@ header .season-badge{display:none}
   gap:16px;
 }
 .hero-card{
-  background:#fff;border-radius:10px;padding:10px;
-  border:1px solid #e8ecf0;
-  transition:box-shadow .2s,border-color .2s;
-  animation:fadeIn .4s ease-out both;
+  background:linear-gradient(145deg,rgba(25,15,50,.9),rgba(15,10,35,.95));
+  border-radius:16px;padding:18px;
+  border:1px solid rgba(100,60,180,.2);
+  transition:all .4s cubic-bezier(.25,.8,.25,1);
+  animation:fadeIn .5s ease-out both;
   position:relative;overflow:hidden;
   cursor:default;
 }
-.hero-card::before{display:none}
-.hero-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);border-color:#6366f1;}
+.hero-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  opacity:0;transition:opacity .3s;
+}
+.cost-1 .hero-card::before{background:linear-gradient(90deg,transparent,#aaa,transparent)}
+.cost-2 .hero-card::before{background:linear-gradient(90deg,transparent,#4CAF50,transparent)}
+.cost-3 .hero-card::before{background:linear-gradient(90deg,transparent,#42A5F5,transparent)}
+.cost-4 .hero-card::before{background:linear-gradient(90deg,transparent,#AB47BC,transparent)}
+.cost-5 .hero-card::before{background:linear-gradient(90deg,transparent,#FFD700,transparent)}
+.hero-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(150,100,255,.4);
+  box-shadow:0 8px 32px rgba(100,50,200,.2);
+}
+.hero-card:hover::before{opacity:1}
 .hero-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
 .hero-avatar{
   width:56px;height:56px;border-radius:50%;flex-shrink:0;
@@ -119,34 +166,40 @@ header .season-badge{display:none}
   box-shadow:0 8px 32px rgba(255,180,0,.15);
 }
 .hero-info{flex:1;min-width:0}
-.hero-name{font-size:1em;font-weight:700;color:#1a1a2e;line-height:1.3}
-.hero-name-en{font-size:.7em;color:#999;font-weight:400}
-.hero-stars{margin-top:1px;font-size:.72em;color:#ffc107}
+.hero-name{font-size:1.1em;font-weight:700;color:#fff;line-height:1.3}
+.hero-name-en{font-size:.75em;color:#777;font-weight:400}
+.hero-stars{margin-top:2px}
+.hero-stars span{font-size:.7em}
 .role-badge{
-  display:inline-block;padding:1px 8px;border-radius:8px;
-  font-size:.68em;margin-top:2px;
-  background:#eef2ff;border:1px solid #c7d2fe;
-  color:#6366f1;font-weight:600;
+  display:inline-block;padding:2px 10px;border-radius:10px;
+  font-size:.7em;margin-top:4px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  color:#aaa;
 }
-.synergies{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.synergies{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
 .synergy-tag{
-  padding:2px 8px;border-radius:10px;font-size:.7em;
-  background:#f0f4f8;border:1px solid #e0e7ef;
-  color:#555;white-space:nowrap;
+  padding:3px 10px;border-radius:12px;font-size:.72em;
+  background:rgba(100,60,200,.15);border:1px solid rgba(100,60,200,.25);
+  color:#c0a0ff;transition:all .3s;white-space:nowrap;
+}
+.synergy-tag:hover{
+  background:rgba(100,60,200,.3);border-color:rgba(150,100,255,.5);
 }
 .items-section{
-  background:#f8fafc;border-radius:8px;padding:8px 10px;
-  border:1px solid #eef2f7;
+  background:rgba(0,0,0,.2);border-radius:10px;padding:10px 12px;
 }
-.items-label{font-size:.68em;color:#aaa;margin-bottom:5px;letter-spacing:1px}
-.items-list{display:flex;gap:5px;flex-wrap:wrap}
+.items-label{font-size:.7em;color:#666;margin-bottom:7px;letter-spacing:1px}
+.items-list{display:flex;gap:8px;flex-wrap:wrap}
 .item-badge{
-  display:flex;align-items:center;gap:4px;
-  padding:3px 7px;border-radius:6px;
-  background:#fff;border:1px solid #e8ecf0;
-  font-size:.7em;color:#444;white-space:nowrap;
+  display:flex;align-items:center;gap:5px;
+  padding:4px 10px;border-radius:8px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+  font-size:.72em;color:#ccc;transition:all .3s;white-space:nowrap;
 }
-.item-badge:hover{border-color:#6366f1;background:#eef2ff}
+.item-badge:hover{
+  background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);
+  transform:translateY(-1px);
+}
 .item-icon{
   width:26px;height:26px;border-radius:5px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
@@ -189,12 +242,20 @@ footer{
 <body>
 <div class="container">
 <header>
-  <h1>金铲铲之战 · 英雄图鉴</h1>
-  <div class="subtitle">S17 星神赛季</div>
+  <h1>金铲铲之战</h1>
+  <div class="subtitle">S17 星神赛季 · 英雄图鉴</div>
+  <div class="season-badge">✦ SEASON 17 · ASTRAL ✦</div>
 </header>
 
+<div class="stats-bar">
+  <div class="stat"><span>63</span>位英雄</div>
+  <div class="stat"><span>5</span>个费用等级</div>
+  <div class="stat"><span>20+</span>种羁绊</div>
+  <div class="stat"><span>3</span>件推荐装备</div>
+</div>
+
 <div class="search-container">
-  <input type="text" class="search-box" id="searchInput" placeholder="🔍 搜索英雄名、拼音、首字母缩写...">
+  <input type="text" class="search-box" id="searchInput" placeholder="🔍 搜索英雄名称、羁绊、定位...">
 </div>
 
 <div class="filter-buttons" id="filterButtons">
@@ -231,7 +292,7 @@ footer{
 const ITEM_STYLES = {
   '无尽之刃':'ad','巨人捕手':'ad','最后的轻语':'ad','朔极之矛':'ad','夜之锋刃':'ad',
   '珠光护手':'crit','饮血剑':'ad','鬼索的狂暴之刃':'as','斯塔提克电刃':'as',
-  '大天使之杖':'ap','蓝霸符':'ap','珠光护手':'ap','卢安娜的飓风':'as',
+  '大天使之杖':'ap','蓝霸符':'ap','法术回响':'ap','卢安娜的飓风':'as',
   '泰坦的坚决':'tank','巨龙之爪':'tank','救赎':'util','正义之手':'util',
   '狂徒铠甲':'tank','日炎斗篷':'tank','石像鬼石板甲':'tank','棘刺背心':'tank',
   '离子火花':'ap'
@@ -239,7 +300,7 @@ const ITEM_STYLES = {
 const ITEM_ABBR = {
   '无尽之刃':'⚔','巨人捕手':'🗡','最后的轻语':'💨','朔极之矛':'🔱','夜之锋刃':'🌙',
   '珠光护手':'💎','饮血剑':'🩸','鬼索的狂暴之刃':'⚡','斯塔提克电刃':'⚡',
-  '大天使之杖':'✨','蓝霸符':'💧','珠光护手':'🔮','卢安娜的飓风':'🌪',
+  '大天使之杖':'✨','蓝霸符':'💧','法术回响':'🔮','卢安娜的飓风':'🌪',
   '泰坦的坚决':'🛡','巨龙之爪':'🐉','救赎':'💚','正义之手':'✋',
   '狂徒铠甲':'❤','日炎斗篷':'🔥','石像鬼石板甲':'🗿','棘刺背心':'🦔',
   '离子火花':'💫'
@@ -271,6 +332,7 @@ const HEROES = [
   {name:'贝蕾亚',avatar:'images/贝蕾亚.png',en:"Bel'Veth",cost:1,synergies:['幻灵战队','海魔人','游侠'],role:'物理战士',items:['饮血剑','无尽之刃','泰坦的坚决']},
   {name:'波比',avatar:'images/波比.png',en:'Poppy',cost:1,synergies:['木灵族','堡垒卫士'],role:'魔法坦克',items:['救赎','狂徒铠甲','巨龙之爪']},
   {name:'维迦',avatar:'images/维迦.png',en:'Veigar',cost:1,synergies:['木灵族','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
+  {name:'亚托克斯',en:'Aatrox',cost:1,synergies:['新星特攻队','堡垒卫士'],role:'物理坦克',items:['救赎','狂徒铠甲','日炎斗篷']},
   {name:'凯特琳',avatar:'images/凯特琳.png',en:'Caitlyn',cost:1,synergies:['新星特攻队','织命人'],role:'物理战士',items:['饮血剑','无尽之刃','泰坦的坚决']},
   {name:'提莫',avatar:'images/提莫.png',en:'Teemo',cost:1,synergies:['太空律动','牧羊人'],role:'魔法C位',items:['大天使之杖','蓝霸符','珠光护手']},
   {name:'内瑟斯',avatar:'images/内瑟斯.png',en:'Nasus',cost:1,synergies:['太空律动','重装战士'],role:'魔法坦克',items:['救赎','狂徒铠甲','巨龙之爪']},
@@ -278,7 +340,8 @@ const HEROES = [
   {name:'泰隆',avatar:'images/泰隆.png',en:'Talon',cost:1,synergies:['观星者','游侠'],role:'物理收割者',items:['无尽之刃','夜之锋刃','珠光护手']},
   {name:'伊泽瑞尔',avatar:'images/伊泽瑞尔.png',en:'Ezreal',cost:1,synergies:['未来战士','狙神'],role:'物理施法者',items:['朔极之矛','蓝霸符','巨人捕手']},
   {name:'蕾欧娜',avatar:'images/蕾欧娜.png',en:'Leona',cost:1,synergies:['法官','重装战士'],role:'魔法坦克',items:['救赎','狂徒铠甲','巨龙之爪']},
-  {name:'丽桑卓',avatar:'images/丽桑卓.png',en:'Lissandra',cost:1,synergies:['暗星','牧羊人','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
+  {name:'科加斯',en:"Cho'Gath",cost:1,synergies:['暗星','斗士'],role:'魔法坦克',items:['救赎','狂徒铠甲','日炎斗篷']},
+  {name:'丽桑卓',avatar:'images/丽桑卓.png',en:'Lissandra',cost:1,synergies:['暗星','牧羊人','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝霸符','法术回响']},
   {name:'雷克塞',avatar:'images/雷克塞.png',en:"Rek'Sai",cost:1,synergies:['海魔人','斗士'],role:'魔法坦克',items:['救赎','狂徒铠甲','日炎斗篷']},
   // 2费
   {name:'卑尔维斯',avatar:'images/卑尔维斯.png',en:"Bel'Veth II",cost:2,synergies:['海魔人','挑战者','狂战士'],role:'物理战士',items:['鬼索的狂暴之刃','饮血剑','泰坦的坚决']},
@@ -290,7 +353,7 @@ const HEROES = [
   {name:'格温',avatar:'images/格温.png',en:'Gwen',cost:2,synergies:['太空律动','游侠'],role:'魔法收割者',items:['大天使之杖','蓝霸符','鬼索的狂暴之刃']},
   {name:'贾克斯',avatar:'images/贾克斯.png',en:'Jax',cost:2,synergies:['观星者','堡垒卫士'],role:'魔法坦克',items:['救赎','狂徒铠甲','巨龙之爪']},
   {name:'米利欧',avatar:'images/米利欧.png',en:'Milio',cost:2,synergies:['未来战士','织命人'],role:'魔法施法者',items:['大天使之杖','蓝霸符','卢安娜的飓风']},
-  {name:'佐伊',avatar:'images/佐伊.png',en:'Zoe',cost:2,synergies:['法官','神谕'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
+  {name:'佐伊',avatar:'images/佐伊.png',en:'Zoe',cost:2,synergies:['法官','神谕'],role:'魔法施法者',items:['大天使之杖','蓝霸符','法术回响']},
   {name:'小木灵',avatar:'images/小木灵.png',en:'Lillia',cost:2,synergies:['木灵族','牧羊人','旅人'],role:'魔法坦克',items:['救赎','狂徒铠甲','巨龙之爪']},
   {name:'莫德凯撒',avatar:'images/莫德凯撒.png',en:'Mordekaiser',cost:2,synergies:['暗星','神谕','重装战士'],role:'魔法坦克',items:['救赎','狂徒铠甲','日炎斗篷']},
   {name:'潘森',avatar:'images/潘森.png',en:'Pantheon',cost:2,synergies:['未来战士','斗士','魔术师'],role:'物理坦克',items:['救赎','狂徒铠甲','日炎斗篷']},
@@ -305,7 +368,7 @@ const HEROES = [
   {name:'维克托',avatar:'images/维克托.png',en:'Viktor',cost:3,synergies:['灵能特工','神谕'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
   {name:'莎弥拉',avatar:'images/莎弥拉.png',en:'Samira',cost:3,synergies:['太空律动','狙神'],role:'物理施法者',items:['无尽之刃','最后的轻语','饮血剑']},
   {name:'奥恩',avatar:'images/奥恩.png',en:'Ornn',cost:3,synergies:['太空律动','堡垒卫士'],role:'魔法坦克',items:['日炎斗篷','石像鬼石板甲','狂徒铠甲']},
-  {name:'璐璐',avatar:'images/璐璐.png',en:'Lulu',cost:3,synergies:['观星者','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
+  {name:'璐璐',avatar:'images/璐璐.png',en:'Lulu',cost:3,synergies:['观星者','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝霸符','法术回响']},
   {name:'黛安娜',avatar:'images/黛安娜.png',en:'Diana',cost:3,synergies:['法官','挑战者'],role:'魔法战士',items:['巨龙之爪','救赎','狂徒铠甲']},
   {name:'拉亚斯特',avatar:'images/拉亚斯特.png',en:'Rhaast',cost:3,synergies:['救世主'],role:'物理坦克',items:['救赎','狂徒铠甲','日炎斗篷']},
   // 4费
@@ -316,7 +379,7 @@ const HEROES = [
   {name:'奥瑞利安·索尔',avatar:'images/奥瑞利安·索尔.png',en:'Aurelion Sol',cost:4,synergies:['霸天机甲','神谕'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
   {name:'超级机甲',avatar:'images/超级机甲.png',en:'Super Mech',cost:4,synergies:['霸天机甲','旅人'],role:'物理坦克',items:['救赎','狂徒铠甲','石像鬼石板甲']},
   {name:'易',avatar:'images/易.png',en:'Master Yi',cost:4,synergies:['灵能特工','狂战士'],role:'物理战士',items:['鬼索的狂暴之刃','饮血剑','泰坦的坚决']},
-  {name:'娜美',avatar:'images/娜美.png',en:'Nami',cost:4,synergies:['太空律动','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
+  {name:'娜美',avatar:'images/娜美.png',en:'Nami',cost:4,synergies:['太空律动','魔术师'],role:'魔法施法者',items:['大天使之杖','蓝霸符','法术回响']},
   {name:'努努和威朗普',avatar:'images/努努和威朗普.png',en:'Nunu',cost:4,synergies:['观星者','重装战士'],role:'魔法坦克',items:['狂徒铠甲','救赎','巨龙之爪']},
   {name:'锐雯',avatar:'images/锐雯.png',en:'Riven',cost:4,synergies:['未来战士','游侠'],role:'物理战士',items:['鬼索的狂暴之刃','饮血剑','泰坦的坚决']},
   {name:'乐芙兰',avatar:'images/乐芙兰.png',en:'LeBlanc',cost:4,synergies:['法官','牧羊人'],role:'魔法C位',items:['大天使之杖','蓝霸符','珠光护手']},
@@ -327,7 +390,7 @@ const HEROES = [
   {name:'菲奥娜',avatar:'images/菲奥娜.png',en:'Fiora',cost:5,synergies:['斗神','幻灵战队','狂战士'],role:'物理战士',items:['无尽之刃','饮血剑','泰坦的坚决']},
   {name:'烬',avatar:'images/烬.png',en:'Jhin',cost:5,synergies:['暗星','灭星尊','狙神'],role:'物理C位',items:['无尽之刃','巨人捕手','最后的轻语']},
   {name:'布里茨',avatar:'images/布里茨.png',en:'Blitzcrank',cost:5,synergies:['汪星机器人','太空律动','重装战士'],role:'魔法战士',items:['救赎','狂徒铠甲','巨龙之爪']},
-  {name:'娑娜',avatar:'images/娑娜.png',en:'Sona',cost:5,synergies:['最高指挥官','灵能特工','牧羊人'],role:'魔法施法者',items:['大天使之杖','蓝霸符','珠光护手']},
+  {name:'娑娜',avatar:'images/娑娜.png',en:'Sona',cost:5,synergies:['最高指挥官','灵能特工','牧羊人'],role:'魔法施法者',items:['大天使之杖','蓝霸符','法术回响']},
   {name:'薇古丝',avatar:'images/薇古丝.png',en:'Vex',cost:5,synergies:['末日使者'],role:'魔法C位',items:['大天使之杖','蓝霸符','珠光护手']},
   {name:'慎',avatar:'images/慎.png',en:'Shen',cost:5,synergies:['暮光铁壁','堡垒卫士'],role:'魔法战士',items:['救赎','巨龙之爪','狂徒铠甲']},
   {name:'劫',avatar:'images/劫.png',en:'Zed',cost:5,synergies:['天煞'],role:'物理战士',items:['无尽之刃','夜之锋刃','饮血剑']},
@@ -425,22 +488,6 @@ function renderHeroes(heroes) {
   content.innerHTML = html;
 }
 
-// ── 拼音查找表 ──────────────────────────────────────────────────────────────
-const PM={'贝蕾亚':'bei lei ya','波比':'bo bi','维迦':'wei jia','凯特琳':'kai te lin','提莫':'ti mo','内瑟斯':'nei se si','崔斯特':'cui si te','泰隆':'tai long','伊泽瑞尔':'yi ze rui er','蕾欧娜':'lei ou na','丽桑卓':'li sang zhuo','雷克塞':'lei ke sai','卑尔维斯':'bei er wei si','阿卡丽':'a ka li','金克丝':'jin ke si','纳尔':'na er','派克':'pai ke','古拉加斯':'gu la jia si','格温':'ge wen','贾克斯':'jia ke si','米利欧':'mi li ou','佐伊':'zuo yi','小木灵':'xiao mu ling','莫德凯撒':'mo de kai sa','潘森':'pan sen','厄运小姐':'e yun xiao jie','俄洛伊':'e luo yi','阿萝拉':'a luo la','菲兹':'fei zi','茂凯':'mao kai','卡莎':'ka sha','厄加特':'e jia te','维克托':'wei ke tuo','莎弥拉':'sha mi la','奥恩':'ao en','璐璐':'lu lu','黛安娜':'dai an na','拉亚斯特':'la ya si te','拉莫斯':'la mo si','库奇':'ku qi','千珏':'qian jue','卡尔玛':'ka er ma','奥瑞利安·索尔':'ao rui li an suo er','超级机甲':'chao ji ji jia','易':'yi','娜美':'na mei','努努和威朗普':'nu nu he wei lang pu','锐雯':'rui wen','乐芙兰':'le fu lan','霞':'xia','塔姆':'ta mu','巴德':'ba de','菲奥娜':'fei ao na','烬':'jin','布里茨':'bu li ci','娑娜':'suo na','薇古丝':'wei gu si','慎':'shen','劫':'jie','格雷福斯':'ge lei fu si','莫甘娜':'mo gan na'};
-function _py(n){return PM[n]||'';}
-function _ini(n){var p=_py(n);if(!p)return '';return p.split(' ').map(function(s){return s[0];}).join('');}
-function matchHero(h,q){
-  if(!q)return true;
-  if(h.name.indexOf(q)>=0)return true;
-  var p=_py(h.name);
-  if(p&&p.replace(/ /g,'').indexOf(q.replace(/ /g,''))>=0)return true;
-  var ini=_ini(h.name).toLowerCase();
-  if(ini&&(ini===q||ini.indexOf(q)===0))return true;
-  var ext=(h.synergies.join(' ')+' '+h.role+' '+h.items.join(' ')).toLowerCase();
-  if(ext.indexOf(q)>=0)return true;
-  return false;
-}
-
 // Initial render
 renderHeroes(HEROES);
 
@@ -451,11 +498,20 @@ searchInput.addEventListener('input', () => {
   clearTimeout(searchTimer);
   searchTimer = setTimeout(() => {
     const q = searchInput.value.trim().toLowerCase();
+    // Reset filter buttons
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
-    if (!q) { renderHeroes(HEROES); return; }
-    renderHeroes(HEROES.filter(h => matchHero(h, q)));
-  }, 150);
+    
+    if (!q) {
+      renderHeroes(HEROES);
+      return;
+    }
+    const filtered = HEROES.filter(h => {
+      const searchStr = `${h.name} ${h.en} ${h.synergies.join(' ')} ${h.role} ${h.items.join(' ')}`.toLowerCase();
+      return searchStr.includes(q);
+    });
+    renderHeroes(filtered);
+  }, 200);
 });
 
 // Filter buttons
