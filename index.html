@@ -42,6 +42,14 @@ header{
   text-align:center;font-size:.55em;letter-spacing:8px;
   color:rgba(200,146,42,.4);padding-bottom:6px;
 }
+.header-mumu{
+  position:absolute;top:50%;right:28px;transform:translateY(-50%);
+  display:flex;align-items:center;
+}
+.header-mumu a{display:block;opacity:.85;transition:opacity .2s;}
+.header-mumu a:hover{opacity:1;}
+.header-mumu img{height:32px;width:auto;display:block;}
+@media(max-width:600px){.header-mumu{display:none}}
 .header-deco{
   display:flex;align-items:center;justify-content:center;gap:12px;
   margin-bottom:10px;
@@ -251,6 +259,11 @@ footer{
 <div class="container">
 <header>
   <div class="header-inner">
+    <div class="header-mumu">
+      <a href="https://mumu.163.com" target="_blank" title="MuMu模拟器">
+        <img src="images/mumu-logo.png" alt="MuMu模拟器">
+      </a>
+    </div>
     <div class="header-deco">
       <div class="header-deco-line"></div>
       <div class="header-deco-icon">✦</div>
